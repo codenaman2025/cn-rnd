@@ -7,6 +7,7 @@ import json
 import streamlit as st
 from src.utils.file_parser import extract_resume_text
 from src.utils.openai_api import call_openai_chat_completion
+from src.utils.groq_api import call_gorq_chat_completion
 from src.constants import EXAMPLE_JSON_SCHEMA
 import os
 
@@ -69,7 +70,8 @@ def upload_resume_page():
 
             with st.spinner("Calling OpenAI Chat Completion API..."):
                 try:
-                    response_text = call_openai_chat_completion(prompt)
+                    #response_text = call_openai_chat_completion(prompt)
+                    response_text = call_gorq_chat_completion(prompt)
                     response_text = response_text.replace("```json","").replace("```","")
                     # Parse the JSON from the response
                     parsed_json = json.loads(response_text)
