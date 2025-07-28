@@ -1,0 +1,9 @@
+streamlit
+streamlit-lottie
+streamlit-extras
+requests
+openai
+pdfplumber
+python-docx
+dotenv
+groq
