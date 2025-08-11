@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BsFillSuitcaseLgFill } from "react-icons/bs";
 import { ImStatsDots } from "react-icons/im";
+import { useContext } from 'react';
+import { AuthContext } from '../../auth/AuthContext';
 
 const NavBar = () => {
-    
+    const {user,logout} = useContext(AuthContext)
+
     const logo = {
         link:'',
         altText: 'Resume-Points'
@@ -20,11 +23,11 @@ const NavBar = () => {
             name:'Apply',
             slug:'/apply'
         },
-        {
-            id:2,
-            name:'Manager',
-            slug:'/manager'
-        }    
+        // {
+        //     id:2,
+        //     name:'Manager',
+        //     slug:'/manager'
+        // }    
     ]
 
     const btnData = [
@@ -67,12 +70,23 @@ const NavBar = () => {
     <span>Apply</span>
   </button> */}
 
-{btnData.map((item)=>{
+{/* {btnData.map((item)=>{
   return <button className={item.style}>
    {item.icon}
    <span>{item.type}</span>
   </button>
-})}
+})} */}
+{/* {
+  user?.role && (user?.role === 'job_seeker' || user?.role === 'hiring_manager' ) &&<button className={btnData[0].style} onClick={logout}>
+ 
+  <span>LogOut</span>
+ </button>
+} */}
+{user?.role && (
+  <button onClick={logout}>Logout</button>
+)}
+
+
 </div>
 
         </nav>

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import JobCard from "../components/cards/JobCard";
+import LSForm from "../components/form/LSForm";
 
 const Landing = () => {
   const roles = [
@@ -27,8 +28,8 @@ const Landing = () => {
   ];
   return (
     
-      <main className="!pt-8">
-        <section className="container mx-auto !px-4 !py-16 text-center">
+      <main className="!pt-2">
+        <section className="container !mx-auto  text-center">
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,13 +46,9 @@ const Landing = () => {
           >
             Applicants apply in minutes. Managers shortlist in seconds.
           </motion.p>
-          <div className="!mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-center justify-center">
-          {roles.map((r, i) => (
-            <motion.div key={r.title} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}>
-              <JobCard title={r.title} description={r.desc} />
-            </motion.div>
-          ))}
-        </div>
+          <div className="">
+            <LSForm/>
+          </div>
        
         </section>
       </main>

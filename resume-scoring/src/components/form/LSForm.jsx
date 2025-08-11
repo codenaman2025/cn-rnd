@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, loginSchema } from "./LoginSignupSchema";
 
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../auth/AuthContext";
+
 export const LSForm = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+  const { signup, login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -17,8 +22,24 @@ export const LSForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(isLogin ? "Login Data:" : "Signup Data:", data);
-    reset();
+    try {
+      if (isLogin) {
+        const loggedInUser = login(data); 
+        if (loggedInUser.role === "hiring_manager") {
+          navigate("/hiring_manager");
+        } else {
+          navigate("/job_seeker");
+        }
+      }
+       else {
+        signup(data);
+        alert("Signup successful! Please login.");
+        setIsLogin(true);
+      }
+      reset();
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   const roleValue = watch("role");
@@ -26,6 +47,7 @@ export const LSForm = () => {
   const inputClass =
     "w-full border border-gray-300 rounded-md !px-3 !py-2 focus:outline-none focus:ring focus:border-blue-500 !mt-1";
   const errorClass = "text-red-500 text-sm !mt-1";
+
   return (
     <div className="max-w-md !mx-auto !mt-10 bg-white !p-6 rounded-lg shadow-md">
       <h1 className="text-2xl font-semibold !mb-4">
@@ -87,7 +109,7 @@ export const LSForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-black text-white !py-2 rounded-md  cursor-pointer !mt-1"
+          className="w-full bg-black text-white !py-2 rounded-md cursor-pointer !mt-1"
         >
           {isLogin ? "Login" : "Sign Up"}
         </button>
@@ -105,5 +127,4 @@ export const LSForm = () => {
     </div>
   );
 };
-
 export default LSForm;
