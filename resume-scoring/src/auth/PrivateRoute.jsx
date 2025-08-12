@@ -11,7 +11,6 @@ const PrivateRoute = ({ children, role }) => {
   }
 
   if (role && user.role !== role) {
-    // Redirect if role doesn't match
     return <Navigate to="/" />;
   }
 
